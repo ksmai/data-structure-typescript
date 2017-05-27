@@ -12,6 +12,7 @@
     "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "dependencies": {
+    "@types/jasmine": "^2.5.47",
     "jasmine": "^2.6.0",
     "ts-node": "^3.0.4",
     "tslint": "^5.3.2",
