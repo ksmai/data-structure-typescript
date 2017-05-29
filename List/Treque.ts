@@ -1,11 +1,11 @@
-import { ArrayStack } from "./ArrayStack";
+import { ArrayDeque } from "./ArrayDeque";
 import { IList } from "./IList";
 
-export class DualArrayDeque<T> implements IList<T> {
-  protected front: ArrayStack<T> = new ArrayStack<T>();
-  protected back: ArrayStack<T> = new ArrayStack<T>();
+export class Treque<T> implements IList<T> {
+  protected front = new ArrayDeque<T>();
+  protected back = new ArrayDeque<T>();
 
-  public size(): number {
+  public size() {
     return this.front.size() + this.back.size();
   }
 
@@ -15,7 +15,7 @@ export class DualArrayDeque<T> implements IList<T> {
       throw new Error("Array index out of bound!");
     }
     if (i < this.front.size()) {
-      return this.front.get(this.front.size() - 1 - i);
+      return this.front.get(i);
     } else {
       return this.back.get(i - this.front.size());
     }
@@ -27,7 +27,7 @@ export class DualArrayDeque<T> implements IList<T> {
       throw new Error("Array index out of bound!");
     }
     if (i < this.front.size()) {
-      return this.front.set(this.front.size() - 1 - i, x);
+      return this.front.set(i, x);
     } else {
       return this.back.set(i - this.front.size(), x);
     }
@@ -39,7 +39,7 @@ export class DualArrayDeque<T> implements IList<T> {
       throw new Error("Array index out of bound!");
     }
     if (i < this.front.size()) {
-      this.front.add(this.front.size() - i, x);
+      this.front.add(i, x);
     } else {
       this.back.add(i - this.front.size(), x);
     }
@@ -62,7 +62,7 @@ export class DualArrayDeque<T> implements IList<T> {
     }
     let x: T;
     if (i < this.front.size()) {
-      x = this.front.remove(this.front.size() - 1 - i);
+      x = this.front.remove(i);
     } else {
       x = this.back.remove(i - this.front.size());
     }
@@ -74,29 +74,29 @@ export class DualArrayDeque<T> implements IList<T> {
     if (this.size() < 3) {
       return;
     }
-    const newFront = new ArrayStack<T>();
-    const newBack = new ArrayStack<T>();
+    const newFront = new ArrayDeque<T>();
+    const newBack = new ArrayDeque<T>();
     if (this.front.size() * 3 < this.back.size()) {
-      const extras = Math.floor(this.size() / 2) - this.front.size();
-      for (let j = extras - 1; j >= 0; j--) {
-        newFront.add(newFront.size(), this.back.get(j));
+      const s = Math.floor(this.size() / 2) - this.front.size();
+      for (let i = 0; i < this.front.size(); i++) {
+        newFront.add(i, this.front.get(i));
       }
-      for (let j = 0; j < this.front.size(); j++) {
-        newFront.add(newFront.size(), this.front.get(j));
+      for (let i = 0; i < s; i++) {
+        newFront.add(newFront.size(), this.back.get(i));
       }
-      for (let j = 0; j < this.back.size() - extras; j++) {
-        newBack.add(newBack.size(), this.back.get(extras + j));
+      for (let i = 0; i < this.back.size() - s; i++) {
+        newBack.add(i, this.back.get(s + i));
       }
     } else if (this.back.size() * 3 < this.front.size()) {
-      const extras = this.front.size() - Math.floor(this.size() / 2);
-      for (let j = 0; j < extras; j++) {
-        newBack.add(newBack.size(), this.front.get(extras - j - 1));
+      const s = this.front.size() - Math.floor(this.size() / 2);
+      for (let i = 0; i < this.front.size() - s; i++) {
+        newFront.add(i, this.front.get(i));
       }
-      for (let j = 0; j < this.back.size(); j++) {
-        newBack.add(newBack.size(), this.back.get(j));
+      for (let i = 0; i < s; i++) {
+        newBack.add(i, this.front.get(this.front.size() - s + i));
       }
-      for (let j = 0; j < this.front.size() - extras; j++) {
-        newFront.add(newFront.size(), this.front.get(extras + j));
+      for (let i = 0; i < this.back.size(); i++) {
+        newBack.add(newBack.size(), this.back.get(i));
       }
     } else {
       return;

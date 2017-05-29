@@ -41,6 +41,15 @@ export class ArrayStack<T> implements IList<T> {
     this.n += 1;
   }
 
+  public addAll(i: number, ...c: T[]): void {
+    if (this.n + c.length > this.a.length) {
+      this.resize(2 * (this.n + c.length));
+    }
+    for (let j = 0; j < c.length; j++) {
+      this.add(i + j, c[j]);
+    }
+  }
+
   public remove(i: number): T {
     i = Math.floor(i);
     if (i < 0 || i > this.n - 1) {
@@ -57,8 +66,8 @@ export class ArrayStack<T> implements IList<T> {
     return x;
   }
 
-  protected resize(): void {
-    const b = { length: Math.max(this.n * 2, 1) };
+  protected resize(size?: number): void {
+    const b = { length: size || Math.max(this.n * 2, 1) };
     for (let i = 0; i < this.n; i++) {
       b[i] = this.a[i];
     }

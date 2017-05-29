@@ -1,5 +1,5 @@
-import { IList } from './IList';
-import { ArrayStack } from './ArrayStack';
+import { ArrayStack } from "./ArrayStack";
+import { IList } from "./IList";
 
 export class RootishArrayStack<T> implements IList<T> {
   protected blocks = new ArrayStack<T[]>();
@@ -40,6 +40,12 @@ export class RootishArrayStack<T> implements IList<T> {
       this.set(k, this.get(k - 1));
     }
     this.set(i, x);
+  }
+
+  public addAll(i: number, ...c: T[]): void {
+    for (let j = 0; j < c.length; j++) {
+      this.add(i + j, c[j]);
+    }
   }
 
   public remove(i: number): T {
