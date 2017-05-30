@@ -9,62 +9,33 @@ import { SEList } from "./SEList";
 import { SLList } from "./SLList";
 import { Treque } from "./Treque";
 
-describe("List", () => {
-  describe("ArrayStack", () => {
-    it("test1", test1(ArrayStack));
-    it("test2", test2(ArrayStack));
-    it("test3", test3(ArrayStack));
-    it("test4", test4(ArrayStack));
-    it("edgeCase", edgeCase(ArrayStack));
-    it("addAll", testAddAll(ArrayStack));
+((...Lists: Array<IListConstructor<any>>) => {
+  describe("Common List tests", () => {
+    Lists.forEach((List) => {
+      describe(List.name, () => {
+        it("test1", test1(List));
+        it("test2", test2(List));
+        it("test3", test3(List));
+        it("test4", test4(List));
+        it("edgeCase", edgeCase(List));
+        it("addAll", testAddAll(List));
+      });
+    });
   });
-  describe("ArrayDeque", () => {
-    it("test1", test1(ArrayDeque));
-    it("test2", test2(ArrayDeque));
-    it("test3", test3(ArrayDeque));
-    it("test4", test4(ArrayDeque));
-    it("edgeCase", edgeCase(ArrayDeque));
-    it("addAll", testAddAll(ArrayDeque));
-  });
-  describe("DualArrayDeque", () => {
-    it("test1", test1(DualArrayDeque));
-    it("test2", test2(DualArrayDeque));
-    it("test3", test3(DualArrayDeque));
-    it("test4", test4(DualArrayDeque));
-    it("edgeCase", edgeCase(DualArrayDeque));
-    it("addAll", testAddAll(DualArrayDeque));
-  });
-  describe("RootishArrayStack", () => {
-    it("test1", test1(RootishArrayStack));
-    it("test2", test2(RootishArrayStack));
-    it("test3", test3(RootishArrayStack));
-    it("test4", test4(RootishArrayStack));
-    it("edgeCase", edgeCase(RootishArrayStack));
-    it("addAll", testAddAll(RootishArrayStack));
-  });
-  describe("Treque", () => {
-    it("test1", test1(Treque));
-    it("test2", test2(Treque));
-    it("test3", test3(Treque));
-    it("test4", test4(Treque));
-    it("edgeCase", edgeCase(Treque));
-    it("addAll", testAddAll(Treque));
-  });
-  describe("ConsecutiveArrayDeque", () => {
-    it("test1", test1(ConsecutiveArrayDeque));
-    it("test2", test2(ConsecutiveArrayDeque));
-    it("test3", test3(ConsecutiveArrayDeque));
-    it("test4", test4(ConsecutiveArrayDeque));
-    it("edgeCase", edgeCase(ConsecutiveArrayDeque));
-    it("addAll", testAddAll(ConsecutiveArrayDeque));
-  });
+})(
+  ArrayStack,
+  ArrayDeque,
+  DualArrayDeque,
+  RootishArrayStack,
+  Treque,
+  ConsecutiveArrayDeque,
+  DLList,
+  SEList,
+  SLList,
+);
+
+describe("Specifics", () => {
   describe("DLList", () => {
-    it("test1", test1(DLList));
-    it("test2", test2(DLList));
-    it("test3", test3(DLList));
-    it("test4", test4(DLList));
-    it("edgeCase", edgeCase(DLList));
-    it("addAll", testAddAll(DLList));
     it("isPalindrome", isPalindromeDLList(DLList));
     it("rotate", rotateDLList(DLList));
     it("truncate", truncateDLList(DLList));
@@ -72,21 +43,7 @@ describe("List", () => {
     it("deal", dealDLList(DLList));
     it("reverse", reverseDLList(DLList));
   });
-  describe("SEList", () => {
-    it("test1", test1(SEList));
-    it("test2", test2(SEList));
-    it("test3", test3(SEList));
-    it("test4", test4(SEList));
-    it("edgeCase", edgeCase(SEList));
-    it("addAll", testAddAll(SEList));
-  });
   describe("SLList", () => {
-    it("test1", test1(SLList));
-    it("test2", test2(SLList));
-    it("test3", test3(SLList));
-    it("test4", test4(SLList));
-    it("edgeCase", edgeCase(SLList));
-    it("addAll", testAddAll(SLList));
     it("SLList specifics", testSLList(SLList));
   });
 });
