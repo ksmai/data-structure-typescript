@@ -6,6 +6,7 @@ import { DualArrayDeque } from "./DualArrayDeque";
 import { IList } from "./IList";
 import { RootishArrayStack } from "./RootishArrayStack";
 import { SEList } from "./SEList";
+import { SLList } from "./SLList";
 import { Treque } from "./Treque";
 
 describe("List", () => {
@@ -64,6 +65,12 @@ describe("List", () => {
     it("test4", test4(DLList));
     it("edgeCase", edgeCase(DLList));
     it("addAll", testAddAll(DLList));
+    it("isPalindrome", isPalindromeDLList(DLList));
+    it("rotate", rotateDLList(DLList));
+    it("truncate", truncateDLList(DLList));
+    it("absorb", absorbDLList(DLList));
+    it("deal", dealDLList(DLList));
+    it("reverse", reverseDLList(DLList));
   });
   describe("SEList", () => {
     it("test1", test1(SEList));
@@ -72,6 +79,15 @@ describe("List", () => {
     it("test4", test4(SEList));
     it("edgeCase", edgeCase(SEList));
     it("addAll", testAddAll(SEList));
+  });
+  describe("SLList", () => {
+    it("test1", test1(SLList));
+    it("test2", test2(SLList));
+    it("test3", test3(SLList));
+    it("test4", test4(SLList));
+    it("edgeCase", edgeCase(SLList));
+    it("addAll", testAddAll(SLList));
+    it("SLList specifics", testSLList(SLList));
   });
 });
 
@@ -148,6 +164,85 @@ function testAddAll(ctor: IListConstructor<number>) {
     push(list, 0, 1, 2, 7, 8, 9);
     list.addAll(3, 3, 4, 5, 6);
     assert(list, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+  };
+}
+
+function testSLList(ctor: { new (): SLList<number> }) {
+  return () => {
+    const list = new ctor();
+    list.addAll(0, 1, 2, 3, 4, 5);
+    expect(list.secondLast().x).toEqual(4);
+    list.reverse();
+    expect(list.secondLast().x).toEqual(2);
+    assert(list, 5, 4, 3, 2, 1);
+  };
+}
+
+function isPalindromeDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const list = new ctor();
+    list.addAll(0, 0, 1, 2, 1, 0);
+    expect(list.isPalindrome()).toBe(true);
+    list.remove(0);
+    list.remove(0);
+    expect(list.isPalindrome()).toBe(false);
+    list.addAll(0, 0, 1, 2);
+    expect(list.isPalindrome()).toBe(true);
+  };
+}
+
+function rotateDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const list = new ctor();
+    list.addAll(0, 0, 1, 2, 3, 4);
+    list.rotate(2);
+    assert(list, 3, 4, 0, 1, 2);
+    list.rotate(3);
+    assert(list, 0, 1, 2, 3, 4);
+  };
+}
+
+function truncateDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const list = new ctor();
+    list.addAll(0, 0, 1, 2, 3, 4);
+    const l2 = list.truncate(4);
+    assert(list, 0, 1, 2, 3);
+    assert(l2, 4);
+    const l3 = list.truncate(1);
+    assert(list, 0);
+    assert(l3, 1, 2, 3);
+  };
+}
+
+function absorbDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const l1 = new ctor();
+    const l2 = new ctor();
+    push(l1, 1, 2, 3);
+    push(l2, 4, 5, 6);
+    l1.absorb(l2);
+    assert(l1, 1, 2, 3, 4, 5, 6);
+    assert(l2);
+  };
+}
+
+function dealDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const l1 = new ctor();
+    push(l1, 1, 2, 3, 4, 5, 6);
+    const l2 = l1.deal();
+    assert(l1, 1, 3, 5);
+    assert(l2, 2, 4, 6);
+  };
+}
+
+function reverseDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const list = new ctor();
+    push(list, 1, 2, 3, 4, 5);
+    list.reverse();
+    assert(list, 5, 4, 3, 2, 1);
   };
 }
 
