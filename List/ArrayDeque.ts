@@ -38,13 +38,12 @@ export class ArrayDeque<T> implements IList<T> {
     }
     if (i < this.n / 2) {
       this.j = this.j === 0 ? this.a.length - 1 : this.j - 1;
-      this.n += 1;
       // Similar to System.arraycopy in Java
       this.arraycopy(this.j, this.j + 1, this.j + i + 1);
     } else {
-      this.n += 1;
       this.arraycopy(this.j + i + 1, this.j + i, this.j + this.n);
     }
+    this.n += 1;
     this.set(i, x);
   }
 
@@ -91,7 +90,7 @@ export class ArrayDeque<T> implements IList<T> {
     if (start >= end) {
       return;
     }
-    const wrap = end > this.a.length || dest >= this.a.length;
+    const wrap = end >= this.a.length || dest >= this.a.length;
     if (wrap) {
       if (start >= dest) {
         Array.prototype.copyWithin.call(this.a, dest, start, this.a.length);

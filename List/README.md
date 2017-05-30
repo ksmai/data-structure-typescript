@@ -12,10 +12,10 @@ Note that these operations are sufficient to implement a `Deque`, and therefore 
 
 | Deque         | Stack   | Queue      |List              |
 | ------------- | ------- | ---------- |------------------|
-| addFirst(x)   |         |            |add(0, x)         |
-| removeFirst() |         | dequeue()  |remove(0)         |
-| addLast(x)    | push(x) | enqueue(x) |add(size(), x)    |
-| removeLast()  | pop()   |            |remove(size() - 1)|
+| addFirst(x)   | push(x) |            |add(0, x)         |
+| removeFirst() | pop()   | dequeue()  |remove(0)         |
+| addLast(x)    |         | enqueue(x) |add(size(), x)    |
+| removeLast()  |         |            |remove(size() - 1)|
 
 ## Array-based list
 Notes:
@@ -66,3 +66,39 @@ Uses two ArrayDeque so that modifications are fast if they are near either end o
 
 ### ConsecutiveArrayDeque
 An ArrayDeque that stores items sequentially without using circular array and modular arithmetics. It rebuilds the backing array when it is overrun at either end in a way that it takes at least `n / 2` operations to be overrun again. The amortized costs of operations are the same as those of `ArrayDeque`.
+
+## Linked list
+
+- pointer based, loses the ability to get/set in `O(1)` time provided by arrays
+- Given any node `u` in the list, it is possible to delete `u` or insert a node next to `u` in constant time, without the need to shift array
+
+### SLList
+
+- uses a sequence of nodes, each storing a data value and a reference to the next node
+- stores both the first and the last node and the length `n` for efficiency
+- can implement `Stack` and `FIFO Queue` with `push(x)`, `pop()`, `add(x)`, `remove()` all run in constant time
+- takes `O(n)` time to remove from tail
+
+### DLList
+
+- each node also store a reference to the previous node
+- contains a `dummy` placeholder node to simplify implementation
+- `get(i)`, `set(i, x)`, `add(i, x)`, `remove(i)` run in `O(1 + min{i, n - i})` time, dominated by the operation to get the `i`-th node
+- suitable for applications that obtain node references by external means, as in `LinkedHashSet`
+
+### SEList (unrolled linked list)
+
+- space-efficient, each node store up to `b + 1` elements with a bounded `ArrayDeque`, an `ArrayDeque` that does not grow or shrink
+- each block (except the last) must contain at least `b - 1` and at most `b + 1` elements, so total number of blocks is `O(n / b)`
+- wasted space is `O(b + n / b)`, which can approach the `sqrt(n)` lower bound by carefully choosing `b`
+
+| Operation                 | Cost                       |
+| ------------------------- | -------------------------- |
+| `get(i)` / `set(i, x)`    | `O(1 + min{i, n - i} / b)` |
+| `add(i, x)` / `remove(i)` | `O(b + min{i, n - i} / b)` |
+
+### XOR-lists
+
+- each node `u` holds `u.nextprev = u.prev XOR u.next`
+- the list itself stores 2 pointers, `dummy` and `dummy.next`
+- not possible in garbage collection environment

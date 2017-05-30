@@ -1,9 +1,11 @@
 import { ArrayDeque } from "./ArrayDeque";
 import { ArrayStack } from "./ArrayStack";
 import { ConsecutiveArrayDeque } from "./ConsecutiveArrayDeque";
+import { DLList } from "./DLList";
 import { DualArrayDeque } from "./DualArrayDeque";
 import { IList } from "./IList";
 import { RootishArrayStack } from "./RootishArrayStack";
+import { SEList } from "./SEList";
 import { Treque } from "./Treque";
 
 describe("List", () => {
@@ -54,6 +56,22 @@ describe("List", () => {
     it("test4", test4(ConsecutiveArrayDeque));
     it("edgeCase", edgeCase(ConsecutiveArrayDeque));
     it("addAll", testAddAll(ConsecutiveArrayDeque));
+  });
+  describe("DLList", () => {
+    it("test1", test1(DLList));
+    it("test2", test2(DLList));
+    it("test3", test3(DLList));
+    it("test4", test4(DLList));
+    it("edgeCase", edgeCase(DLList));
+    it("addAll", testAddAll(DLList));
+  });
+  describe("SEList", () => {
+    it("test1", test1(SEList));
+    it("test2", test2(SEList));
+    it("test3", test3(SEList));
+    it("test4", test4(SEList));
+    it("edgeCase", edgeCase(SEList));
+    it("addAll", testAddAll(SEList));
   });
 });
 
