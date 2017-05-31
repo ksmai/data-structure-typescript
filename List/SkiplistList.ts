@@ -112,6 +112,60 @@ export class SkiplistList<T> implements IList<T> {
     return y;
   }
 
+  public truncate(i: number): SkiplistList<T> {
+    i = Math.floor(i);
+    if (i < 0 || i >= this.n) {
+      return new SkiplistList<T>();
+    }
+    let u = this.sentinel;
+    let r = this.h;
+    let j = -1;
+    const l2 = new SkiplistList<T>();
+    while (r >= 0) {
+      while (u.next[r] !== null && j + u.length[r] < i) {
+        j += u.length[r];
+        u = u.next[r];
+      }
+      if (u.next[r] !== null && l2.h < r) {
+        l2.h = r;
+      }
+      l2.sentinel.next[r] = u.next[r];
+      l2.sentinel.length[r] = u.length[r] - i + 1 + j;
+      u.length[r] = 0;
+      u.next[r] = null;
+      if (u === this.sentinel) {
+        this.h--;
+      }
+      r--;
+    }
+    l2.n = this.n - i;
+    this.n = i;
+    return l2;
+  }
+
+  public absorb(l2: SkiplistList<T>): void {
+    let u = this.sentinel;
+    let r = Math.max(this.h, l2.h);
+    this.h = r;
+    let j = -1;
+    while (r >= 0) {
+      while (u.next[r] !== null) {
+        j += u.length[r];
+        u = u.next[r];
+      }
+      if (l2.h >= r) {
+        u.next[r] = l2.sentinel.next[r];
+        u.length[r] = this.n - j - 1 + l2.sentinel.length[r];
+        l2.sentinel.next[r] = null;
+        l2.sentinel.length[r] = 0;
+      }
+      r--;
+    }
+    this.n += l2.n;
+    l2.n = 0;
+    l2.h = 0;
+  }
+
   protected getPredNode(i: number): Node<T> {
     i = Math.floor(i);
     if (i < 0 || i > this.n - 1) {

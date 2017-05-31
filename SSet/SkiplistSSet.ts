@@ -1,7 +1,7 @@
 /* tslint:disable max-classes-per-file no-bitwise */
 import { ISSet } from "./ISSet";
 
-class Node<T> {
+export class Node<T> {
   public x: T;
   public next: { length: number, [key: number]: Node<T> };
 
@@ -102,10 +102,10 @@ export class SkiplistSSet<T> implements ISSet<T> {
   }
 
   protected randomHeight(): number {
-    const rand = (Math.random() * Math.pow(2, 32)) | 0;
+    const rand = ((Math.random() - 0.5) * (Math.pow(2, 32) - 1)) | 0;
     let k = 0;
     let m = 1;
-    while ((k & m) > 0) {
+    while ((rand & m) > 0) {
       k++;
       m <<= 1;
     }

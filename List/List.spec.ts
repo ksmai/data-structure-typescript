@@ -40,13 +40,17 @@ describe("Specifics", () => {
   describe("DLList", () => {
     it("isPalindrome", isPalindromeDLList(DLList));
     it("rotate", rotateDLList(DLList));
-    it("truncate", truncateDLList(DLList));
-    it("absorb", absorbDLList(DLList));
+    it("truncate", truncatable(DLList));
+    it("absorb", absorbable(DLList));
     it("deal", dealDLList(DLList));
     it("reverse", reverseDLList(DLList));
   });
   describe("SLList", () => {
     it("SLList specifics", testSLList(SLList));
+  });
+  describe("SkiplistList", () => {
+    it("truncate", truncatable(SkiplistList));
+    it("absorb", absorbable(SkiplistList));
   });
 });
 
@@ -161,7 +165,7 @@ function rotateDLList(ctor: { new (): DLList<number> }) {
   };
 }
 
-function truncateDLList(ctor: { new (): DLList<number> }) {
+function truncatable(ctor: { new (): DLList<number>|SkiplistList<number> }) {
   return () => {
     const list = new ctor();
     list.addAll(0, 0, 1, 2, 3, 4);
@@ -174,13 +178,13 @@ function truncateDLList(ctor: { new (): DLList<number> }) {
   };
 }
 
-function absorbDLList(ctor: { new (): DLList<number> }) {
+function absorbable(ctor: { new (): DLList<number>|SkiplistList<number> }) {
   return () => {
     const l1 = new ctor();
     const l2 = new ctor();
     push(l1, 1, 2, 3);
     push(l2, 4, 5, 6);
-    l1.absorb(l2);
+    (l1 as any).absorb(l2);
     assert(l1, 1, 2, 3, 4, 5, 6);
     assert(l2);
   };
