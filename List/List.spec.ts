@@ -6,6 +6,7 @@ import { DualArrayDeque } from "./DualArrayDeque";
 import { IList } from "./IList";
 import { RootishArrayStack } from "./RootishArrayStack";
 import { SEList } from "./SEList";
+import { SkiplistList } from "./SkiplistList";
 import { SLList } from "./SLList";
 import { Treque } from "./Treque";
 
@@ -32,6 +33,7 @@ import { Treque } from "./Treque";
   DLList,
   SEList,
   SLList,
+  SkiplistList,
 );
 
 describe("Specifics", () => {

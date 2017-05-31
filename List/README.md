@@ -102,3 +102,8 @@ An ArrayDeque that stores items sequentially without using circular array and mo
 - each node `u` holds `u.nextprev = u.prev XOR u.next`
 - the list itself stores 2 pointers, `dummy` and `dummy.next`
 - not possible in garbage collection environment
+
+### SkiplistList
+
+- make use of the `Skiplist` structure which relies on randomization to determine the height of each list node
+- All operations run in `O(log n)` time including `get(i)`, `set(i, x)`, `add(i ,x)` and `remove(i)`
