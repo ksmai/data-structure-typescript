@@ -1,6 +1,6 @@
 import { ISSet } from "./ISSet";
 import { SkiplistSSet } from "./SkiplistSSet";
-import { SkiplistWithFinger } from './SkiplistWithFinger';
+import { SkiplistWithFinger } from "./SkiplistWithFinger";
 
 type Testsuite<T> = (ctor: { new (): ISSet<T> }) => () => void;
 

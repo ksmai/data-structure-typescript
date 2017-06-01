@@ -1,4 +1,4 @@
-import { SkiplistSSet, Node } from './SkiplistSSet';
+import { Node, SkiplistSSet } from "./SkiplistSSet";
 
 export class SkiplistWithFinger<T> extends SkiplistSSet<T> {
   protected finger: Array<Node<T>>;
