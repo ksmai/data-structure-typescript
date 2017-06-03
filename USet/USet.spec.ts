@@ -2,11 +2,11 @@ import { ChainedHashTable } from "./ChainedHashTable";
 import { IUSet } from "./IUSet";
 import { LinearHashTable } from "./LinearHashTable";
 
-interface USetConstructor {
+interface IUSetConstructor {
   new (): IUSet<number>;
 }
 
-type TestSuite = (ctor: USetConstructor) => () => void;
+type TestSuite = (ctor: IUSetConstructor) => () => void;
 
 const fill = (uset: IUSet<number>, n = 1000) => {
   Array(n)
@@ -70,7 +70,7 @@ const test4: TestSuite = (ctor) => {
 };
 
 describe("USet common tests", () => {
-  ((...ctors: USetConstructor[]) => {
+  ((...ctors: IUSetConstructor[]) => {
     ctors.forEach((ctor) => {
       describe(ctor.name, () => {
         ((...tests: TestSuite[]) => {
