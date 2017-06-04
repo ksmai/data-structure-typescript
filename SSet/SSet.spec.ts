@@ -2,6 +2,7 @@ import { BinarySearchTree } from "./BinarySearchTree";
 import { ISSet } from "./ISSet";
 import { SkiplistSSet } from "./SkiplistSSet";
 import { SkiplistWithFinger } from "./SkiplistWithFinger";
+import { Treap } from "./Treap";
 
 type Testsuite<T> = (ctor: { new (): ISSet<T> }) => () => void;
 
@@ -65,6 +66,7 @@ const test4: Testsuite<number> = (ctor) => {
   SkiplistSSet,
   SkiplistWithFinger,
   BinarySearchTree,
+  Treap,
 );
 
 describe("BinarySearchTree specifics", () => {
