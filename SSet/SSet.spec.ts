@@ -1,5 +1,6 @@
 import { BinarySearchTree } from "./BinarySearchTree";
 import { ISSet } from "./ISSet";
+import { ScapegoatTree } from "./ScapegoatTree";
 import { SkiplistSSet } from "./SkiplistSSet";
 import { SkiplistWithFinger } from "./SkiplistWithFinger";
 import { Treap } from "./Treap";
@@ -67,6 +68,7 @@ const test4: Testsuite<number> = (ctor) => {
   SkiplistWithFinger,
   BinarySearchTree,
   Treap,
+  ScapegoatTree,
 );
 
 describe("BinarySearchTree specifics", () => {

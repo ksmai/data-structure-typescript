@@ -25,3 +25,9 @@ A `SSet` represents a set of sorted elements. It supports the following operatio
 - `Treap` obtains the same expected search path length by assigning a random `priority` field to each node and maintaining the heap property in addition to the binary search tree property, hence its name (**Tre**e + H**eap**)
 - expected time costs of `add(x)`, `remove(x)`, `find(x)` are all `O(log n)`
 - `Treap` is faster than `SkiplistSSet` in practice, even though their asymptotic costs are the same
+
+## Scapegoat tree
+
+- when the tree is not balanced, find a "scapegoat" node `u` and rebuild the entire subtree rooted at `u` into a perfectly balanced tree
+- the amortized costs of `find(x)`, `add(x)`, `remove(x)` are `O(log n)`
+- it is still slower than all other `SSet` implementations including `Treap` and `SkiplistSSet`, but could be the right choice in certain situations, e.g. when some data in a node cannot be updated in constant time during a rotation operation, but can be updated in the rebuild operation
