@@ -1,5 +1,7 @@
+import { AVLTree } from "./AVLTree";
 import { BinarySearchTree } from "./BinarySearchTree";
 import { ISSet } from "./ISSet";
+import { RedBlackTree } from "./RedBlackTree";
 import { ScapegoatTree } from "./ScapegoatTree";
 import { SkiplistSSet } from "./SkiplistSSet";
 import { SkiplistWithFinger } from "./SkiplistWithFinger";
@@ -52,6 +54,34 @@ const test4: Testsuite<number> = (ctor) => {
   };
 };
 
+const test5: Testsuite<number> = (ctor) => {
+  return () => {
+    const sset = new ctor();
+    const elems = [6, 4, 10, 2, 5, 8, 12, 1, 3, 7, 9, 11];
+    elems.forEach((x) => expect(sset.add(x)).toBe(true));
+    elems.forEach((x) => expect(sset.find(x)).toBe(x));
+    elems.forEach((x) => expect(sset.remove(x)).toBe(true));
+  };
+};
+
+const test6: Testsuite<number> = (ctor) => {
+  return () => {
+    const sset = new ctor();
+    const arr = Array(100).fill(null).map((e, i) => i);
+    for (let i = 0; i < arr.length - 1; i++) {
+      const rand = i + Math.floor(Math.random() * (arr.length - i));
+      const tmp = arr[i];
+      arr[i] = arr[rand];
+      arr[rand] = tmp;
+    }
+    arr.forEach((x) => expect(sset.add(x)).toBe(true));
+    const y = arr[Math.floor(Math.random() * (arr.length - 1))];
+    expect(sset.find(y)).toBe(y);
+    expect(sset.remove(y)).toBe(true);
+    expect(sset.find(y)).toBe(y + 1);
+  };
+};
+
 ((...ctors: Array<{ new (): ISSet<any> }>) => {
   describe("SSet common tests", () => {
     ctors.forEach((ctor) => {
@@ -60,6 +90,8 @@ const test4: Testsuite<number> = (ctor) => {
         it("test 2", test2(ctor));
         it("test 3", test3(ctor));
         it("test 4", test4(ctor));
+        it("test 5", test5(ctor));
+        it("test 6", test6(ctor));
       });
     });
   });
@@ -69,6 +101,8 @@ const test4: Testsuite<number> = (ctor) => {
   BinarySearchTree,
   Treap,
   ScapegoatTree,
+  RedBlackTree,
+  AVLTree,
 );
 
 describe("BinarySearchTree specifics", () => {
@@ -159,5 +193,19 @@ describe("BinarySearchTree specifics", () => {
     expect(tree.getLE(9))
       .toEqual(jasmine.arrayContaining([1, 3, 4, 5, 6, 7, 8, 9]) as any);
     expect(tree.getLE(1)).toEqual(jasmine.arrayContaining([1]) as any);
+  });
+});
+
+describe("RedBlackTree", () => {
+  let tree: RedBlackTree;
+
+  beforeEach(() => tree = new RedBlackTree());
+
+  xit("should add 1,000,000 elements quickly", () => {
+    Array(1000000)
+      .fill(null)
+      .forEach((e, i) => expect(tree.add(i)).toBe(true));
+
+    expect(tree.find(500000.5)).toBe(500001);
   });
 });

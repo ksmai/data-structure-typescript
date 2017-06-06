@@ -31,3 +31,18 @@ A `SSet` represents a set of sorted elements. It supports the following operatio
 - when the tree is not balanced, find a "scapegoat" node `u` and rebuild the entire subtree rooted at `u` into a perfectly balanced tree
 - the amortized costs of `find(x)`, `add(x)`, `remove(x)` are `O(log n)`
 - it is still slower than all other `SSet` implementations including `Treap` and `SkiplistSSet`, but could be the right choice in certain situations, e.g. when some data in a node cannot be updated in constant time during a rotation operation, but can be updated in the rebuild operation
+
+## Red black tree
+
+- simulate 2-4 tree as a binary tree so that max height is `O(log n)`
+- `add(x)`, `remove(x)`, `find(x)` run *in the worst case* in `O(log n)` time, better than SkiplistSSet, Treap, Scapegoat tree with either expected or amortized `O(log n)` time
+- amortized time spent in maintaining the RedBlackTree properties below is `O(1)`
+    1. **black-height** All root-to-leaf path has the same number of black nodes
+    2. **no-red-edge** A red node cannot have any red children
+    3. **left-leaning** For any node `u`, if `u.left` is black, `u.right` is also black (this is not an essential property of red black tree but can simplify its implementation)
+
+## AVL Tree
+
+- At each node `u`, the heights of `u.left` and `u.right` differ by at most one
+- smaller height than red black tree
+- simpler to implement
