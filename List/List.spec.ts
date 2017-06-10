@@ -44,6 +44,7 @@ describe("Specifics", () => {
     it("absorb", absorbable(DLList));
     it("deal", dealDLList(DLList));
     it("reverse", reverseDLList(DLList));
+    it("mergeSort", mergeSortDLList(DLList));
   });
   describe("SLList", () => {
     it("SLList specifics", testSLList(SLList));
@@ -206,6 +207,15 @@ function reverseDLList(ctor: { new (): DLList<number> }) {
     push(list, 1, 2, 3, 4, 5);
     list.reverse();
     assert(list, 5, 4, 3, 2, 1);
+  };
+}
+
+function mergeSortDLList(ctor: { new (): DLList<number> }) {
+  return () => {
+    const list = new ctor();
+    push(list, 1, 2, 3, 4, 5, 0, 9, 8, 6, 7);
+    const l2 = list.mergeSort();
+    assert(l2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   };
 }
 

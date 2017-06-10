@@ -163,6 +163,49 @@ export class DLList<T> implements IList<T> {
     }
   }
 
+  public mergeSort(l1: DLList<T> = this): DLList<T> {
+    if (l1.n <= 1) {
+      return l1;
+    }
+    const m = Math.floor(l1.n / 2);
+    let l2 = l1.truncate(m);
+    l1 = l1.mergeSort(l1);
+    l2 = l2.mergeSort(l2);
+    return DLList.merge<T>(l1, l2);
+  }
+
+  protected takeFirst(l2: DLList<T>): void {
+    if (l2.n === 0) {
+      return;
+    }
+    const node = l2.dummy.next;
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+    l2.n--;
+    node.prev = this.dummy.prev;
+    node.next = this.dummy;
+    node.prev.next = node;
+    node.next.prev = node;
+    this.n++;
+  }
+
+  static merge<T>(l1: DLList<T>, l2: DLList<T>): DLList<T> {
+    const merged = new DLList<T>();
+    while (l1.n > 0 && l2.n > 0) {
+      if (l1.get(0) < l2.get(0)) {
+        merged.takeFirst(l1);
+      } else {
+        merged.takeFirst(l2);
+      }
+    }
+    if (l1.n > 0) {
+      merged.absorb(l1);
+    } else {
+      merged.absorb(l2);
+    }
+    return merged;
+  }
+
   protected getNode(i: number): Node<T> {
     let n: Node<T>;
     if (i < this.n / 2) {
