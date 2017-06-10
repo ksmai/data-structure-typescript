@@ -1,5 +1,5 @@
 /* tslint:disable max-classes-per-file */
-import { IQueue } from './IQueue';
+import { IQueue } from "./IQueue";
 
 class Node {
   public x: number;

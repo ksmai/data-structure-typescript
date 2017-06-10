@@ -1,13 +1,11 @@
-import { ISort } from './ISort';
-import { mergeSort } from './mergeSort';
-import { quickSort } from './quickSort';
-import { heapSort } from './heapSort';
-import { countingSort } from './countingSort';
-import { radixSort } from './radixSort';
+import { countingSort } from "./countingSort";
+import { heapSort } from "./heapSort";
+import { ISort } from "./ISort";
+import { mergeSort } from "./mergeSort";
+import { quickSort } from "./quickSort";
+import { radixSort } from "./radixSort";
 
-interface TestSuite {
-  (fn: ISort<number>): () => void;
-}
+type TestSuite = (fn: ISort<number>) => () => void;
 
 function numberComparator(a: number, b: number) {
   if (a < b) {
@@ -30,7 +28,7 @@ const test1: TestSuite = (fn) => {
 
 const test2: TestSuite = (fn) => {
   return () => {
-    const arr = '556611337722441274653'.split('').map(Number);
+    const arr = "556611337722441274653".split("").map(Number);
     const sorted = arr.slice().sort(numberComparator);
     fn(arr, numberComparator);
     expect(arr).toEqual(sorted);
@@ -48,8 +46,8 @@ const test3: TestSuite = (fn) => {
   };
 };
 
-describe('Comparison-based sorting', () => {
-  ((...fns: ISort<number>[]) => {
+describe("Comparison-based sorting", () => {
+  ((...fns: Array<ISort<number>>) => {
     fns.forEach((fn) => {
       describe((fn as any).name, () => {
         ((...tests) => {
@@ -70,16 +68,16 @@ describe('Comparison-based sorting', () => {
   );
 });
 
-describe('Non-comparison based sorting', () => {
-  describe('countingSort', () => {
-    it('test1', () => {
+describe("Non-comparison based sorting", () => {
+  describe("countingSort", () => {
+    it("test1", () => {
       const arr = [1, 2, 3, 4, 5, 5, 4, 3, 2, 1];
       const sorted = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
       countingSort(arr, 6);
       expect(arr).toEqual(sorted);
     });
 
-    it('test2', () => {
+    it("test2", () => {
       const k = 200;
       const arr = Array(k).fill(0).map(() => Math.floor(Math.random() * k));
       const sorted = arr.slice().sort(numberComparator);
@@ -88,15 +86,15 @@ describe('Non-comparison based sorting', () => {
     });
   });
 
-  describe('radixSort', () => {
-    it('test1', () => {
+  describe("radixSort", () => {
+    it("test1", () => {
       const arr = [1, 2, 3, 4, 5, 5, 4, 3, 2, 1];
       const sorted = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
       radixSort(arr, 4);
       expect(arr).toEqual(sorted);
     });
 
-    it('test2', () => {
+    it("test2", () => {
       const k = 200;
       const arr = Array(k).fill(0).map(() => Math.floor(Math.random() * k));
       const sorted = arr.slice().sort(numberComparator);

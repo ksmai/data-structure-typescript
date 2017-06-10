@@ -1,22 +1,17 @@
-import { IQueue } from './IQueue';
-import { BinaryHeap } from './BinaryHeap';
-import { MeldableHeap } from './MeldableHeap';
-import { DaryHeap } from './DaryHeap';
+import { BinaryHeap } from "./BinaryHeap";
+import { DaryHeap } from "./DaryHeap";
+import { IQueue } from "./IQueue";
+import { MeldableHeap } from "./MeldableHeap";
 
-interface QueueConstructor {
+interface IQueueConstructor {
   new (): IQueue<number>;
 }
 
-interface TestSuite {
-  (ctor: QueueConstructor): () => void;
-}
+type TestSuite = (ctor: IQueueConstructor) => () => void;
 
 type TestData = number[];
 
-interface TestSuiteGenerator {
-  (data: TestData): TestSuite;
-}
-
+type TestSuiteGenerator = (data: TestData) => TestSuite;
 
 const priorityQueueTestGenerator: TestSuiteGenerator = (elems) => {
   return (ctor) => {
@@ -38,8 +33,8 @@ const priorityTest2 = priorityQueueTestGenerator(
   (Array(100) as number[]).fill(0).map(() => Math.random()),
 );
 
-describe('PriorityQueue commons', () => {
-  ((...ctors: QueueConstructor[]) => {
+describe("PriorityQueue commons", () => {
+  ((...ctors: IQueueConstructor[]) => {
     ctors.forEach((ctor) => {
       describe((ctor as any).name, () => {
         ((...suites: TestSuite[]) => {
@@ -59,8 +54,8 @@ describe('PriorityQueue commons', () => {
   );
 });
 
-describe('BinaryHeap specifics', () => {
-  it('remove(i)', () => {
+describe("BinaryHeap specifics", () => {
+  it("remove(i)", () => {
     const q = new BinaryHeap();
     q.add(1);
     q.add(2);

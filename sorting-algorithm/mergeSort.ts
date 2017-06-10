@@ -1,4 +1,4 @@
-import { IComparator } from './IComparator';
+import { IComparator } from "./IComparator";
 
 function merge<T>(a: T[], c: IComparator<T>, a1: T[], a2: T[]) {
   let i1 = 0;

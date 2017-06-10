@@ -1,5 +1,3 @@
-import { IComparator } from './IComparator';
+import { IComparator } from "./IComparator";
 
-export interface ISort<T> {
-  (a: T[], c: IComparator<T>): void;
-}
+export type ISort<T> = (a: T[], c: IComparator<T>) => void;

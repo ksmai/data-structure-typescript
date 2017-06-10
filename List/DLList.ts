@@ -8,6 +8,23 @@ class Node<T> {
 }
 
 export class DLList<T> implements IList<T> {
+  public static merge<T>(l1: DLList<T>, l2: DLList<T>): DLList<T> {
+    const merged = new DLList<T>();
+    while (l1.n > 0 && l2.n > 0) {
+      if (l1.get(0) < l2.get(0)) {
+        merged.takeFirst(l1);
+      } else {
+        merged.takeFirst(l2);
+      }
+    }
+    if (l1.n > 0) {
+      merged.absorb(l1);
+    } else {
+      merged.absorb(l2);
+    }
+    return merged;
+  }
+
   protected dummy: Node<T>;
   protected n: number;
 
@@ -187,23 +204,6 @@ export class DLList<T> implements IList<T> {
     node.prev.next = node;
     node.next.prev = node;
     this.n++;
-  }
-
-  static merge<T>(l1: DLList<T>, l2: DLList<T>): DLList<T> {
-    const merged = new DLList<T>();
-    while (l1.n > 0 && l2.n > 0) {
-      if (l1.get(0) < l2.get(0)) {
-        merged.takeFirst(l1);
-      } else {
-        merged.takeFirst(l2);
-      }
-    }
-    if (l1.n > 0) {
-      merged.absorb(l1);
-    } else {
-      merged.absorb(l2);
-    }
-    return merged;
   }
 
   protected getNode(i: number): Node<T> {

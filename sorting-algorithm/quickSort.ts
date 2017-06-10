@@ -1,4 +1,4 @@
-import { IComparator } from './IComparator';
+import { IComparator } from "./IComparator";
 
 function swap(a: any[], i: number, j: number) {
   const tmp = a[i];

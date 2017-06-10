@@ -1,3 +1,4 @@
+/* tslint:disable prefer-for-of */
 export function countingSort(a: number[], k: number) {
   const c = Array(k).fill(0);
   const b = a.slice();

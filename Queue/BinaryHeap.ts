@@ -1,4 +1,4 @@
-import { IQueue } from './IQueue';
+import { IQueue } from "./IQueue";
 
 export class BinaryHeap implements IQueue<number> {
   protected n: number = 0;
@@ -51,8 +51,8 @@ export class BinaryHeap implements IQueue<number> {
   protected trickleDown(i: number): void {
     do {
       let j = -1;
-      let r = this.right(i);
-      let l = this.left(i);
+      const r = this.right(i);
+      const l = this.left(i);
       if (r < this.n && this.a[r] < this.a[i]) {
         if (this.a[l] < this.a[r]) {
           j = l;
@@ -66,7 +66,7 @@ export class BinaryHeap implements IQueue<number> {
         this.swap(i, j);
       }
       i = j;
-    } while(i >= 0);
+    } while (i >= 0);
   }
 
   protected left(i: number): number {

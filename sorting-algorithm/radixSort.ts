@@ -1,8 +1,8 @@
 const w = 32;
 
-/* tslint:disable no-bitwise */
+/* tslint:disable no-bitwise prefer-for-of */
 export function radixSort(a: number[], d: number) {
-  for(let p = 0; p < w / d; p++) {
+  for (let p = 0; p < w / d; p++) {
     const b = a.slice();
     const c = Array(1 << d).fill(0);
     for (let i = 0; i < b.length; i++) {

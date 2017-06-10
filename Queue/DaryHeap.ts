@@ -1,4 +1,4 @@
-import { IQueue } from './IQueue';
+import { IQueue } from "./IQueue";
 
 export class DaryHeap implements IQueue<number> {
   protected a: { length: number, [key: number]: number };
@@ -59,13 +59,13 @@ export class DaryHeap implements IQueue<number> {
         if (c < this.n && this.a[c] < this.a[min]) {
           j = c;
           min = c;
-        } 
+        }
       }
       if (j >= 0) {
         this.swap(i, j);
       }
       i = j;
-    } while(i >= 0);
+    } while (i >= 0);
   }
 
   protected child(i: number, j: number): number {
