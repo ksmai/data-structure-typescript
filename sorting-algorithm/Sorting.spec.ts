@@ -2,6 +2,8 @@ import { ISort } from './ISort';
 import { mergeSort } from './mergeSort';
 import { quickSort } from './quickSort';
 import { heapSort } from './heapSort';
+import { countingSort } from './countingSort';
+import { radixSort } from './radixSort';
 
 interface TestSuite {
   (fn: ISort<number>): () => void;
@@ -46,7 +48,7 @@ const test3: TestSuite = (fn) => {
   };
 };
 
-describe('SortingAlgorithm', () => {
+describe('Comparison-based sorting', () => {
   ((...fns: ISort<number>[]) => {
     fns.forEach((fn) => {
       describe((fn as any).name, () => {
@@ -66,4 +68,40 @@ describe('SortingAlgorithm', () => {
     quickSort,
     heapSort,
   );
+});
+
+describe('Non-comparison based sorting', () => {
+  describe('countingSort', () => {
+    it('test1', () => {
+      const arr = [1, 2, 3, 4, 5, 5, 4, 3, 2, 1];
+      const sorted = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
+      countingSort(arr, 6);
+      expect(arr).toEqual(sorted);
+    });
+
+    it('test2', () => {
+      const k = 200;
+      const arr = Array(k).fill(0).map(() => Math.floor(Math.random() * k));
+      const sorted = arr.slice().sort(numberComparator);
+      countingSort(arr, k);
+      expect(arr).toEqual(sorted);
+    });
+  });
+
+  describe('radixSort', () => {
+    it('test1', () => {
+      const arr = [1, 2, 3, 4, 5, 5, 4, 3, 2, 1];
+      const sorted = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5];
+      radixSort(arr, 4);
+      expect(arr).toEqual(sorted);
+    });
+
+    it('test2', () => {
+      const k = 200;
+      const arr = Array(k).fill(0).map(() => Math.floor(Math.random() * k));
+      const sorted = arr.slice().sort(numberComparator);
+      radixSort(arr, 4);
+      expect(arr).toEqual(sorted);
+    });
+  });
 });
