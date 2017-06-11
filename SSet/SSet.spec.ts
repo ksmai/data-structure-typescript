@@ -6,6 +6,9 @@ import { ScapegoatTree } from "./ScapegoatTree";
 import { SkiplistSSet } from "./SkiplistSSet";
 import { SkiplistWithFinger } from "./SkiplistWithFinger";
 import { Treap } from "./Treap";
+import { BinaryTrie } from "./BinaryTrie";
+import { XFastTrie } from "./XFastTrie";
+import { YFastTrie } from './YFastTrie';
 
 type Testsuite<T> = (ctor: { new (): ISSet<T> }) => () => void;
 
@@ -49,8 +52,8 @@ const test4: Testsuite<number> = (ctor) => {
     expect(sset.find(1)).toBe(1);
     expect(sset.find(5)).toBe(5);
     expect(sset.find(10)).toBe(null);
-    expect(sset.find(2.7)).toBe(3);
-    expect(sset.find(-1)).toBe(1);
+    expect(sset.find(3)).toBe(3);
+    expect(sset.find(0)).toBe(1);
   };
 };
 
@@ -78,7 +81,7 @@ const test6: Testsuite<number> = (ctor) => {
     const y = arr[Math.floor(Math.random() * (arr.length - 1))];
     expect(sset.find(y)).toBe(y);
     expect(sset.remove(y)).toBe(true);
-    expect(sset.find(y)).toBe(y + 1);
+    expect(sset.find(y)).toBe(y < 99 ? y + 1 : null);
   };
 };
 
@@ -103,6 +106,9 @@ const test6: Testsuite<number> = (ctor) => {
   ScapegoatTree,
   RedBlackTree,
   AVLTree,
+  BinaryTrie,
+  XFastTrie,
+  YFastTrie,
 );
 
 describe("BinarySearchTree specifics", () => {

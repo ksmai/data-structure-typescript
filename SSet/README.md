@@ -46,3 +46,33 @@ A `SSet` represents a set of sorted elements. It supports the following operatio
 - At each node `u`, the heights of `u.left` and `u.right` differ by at most one
 - smaller height than red black tree
 - simpler to implement
+
+### SSet for integers
+
+- for storing `w`-bit integers, it is possible to have a `SSet` faster than `O(log n)`
+
+#### BinaryTrie
+
+- encode `w-bit` integers in a binary tree
+- all leaves have depth `w`
+- the path for integer `x` turns left at level `i` if the `i`-th most significant bit of `x` is 0, and turns right if it is 1
+- the leaves form a doubly linked list
+- each node contains an additional `jump` pointer that points to:
+    - largest leaf in its subtree, if right child is missing
+    - smallest leaf in its subtree, if left child is missing
+- supports `add(x)`, `remove(x)`, `find(x)` in `O(w)` time, which is not impressive since `log n <= w`
+- space usage is `O(nw)`
+
+#### XFastTrie
+
+- store all nodes at level `i` in a `BinaryTrie` in the hash table `t[i]`, resulting in `w + 1` hash tables
+- perform binary search to locate the node `u` which is the end of the search path for `x`
+- speed up `find(x)` to `O(log w)` expected time per operation
+- cost of `add(x)`, `remove(x)`, and memory usage remains the same
+
+#### YFastTrie
+
+- store each element in a `XFastTrie` with probably `1/w`
+- each element `xi` in the `XFastTrie` is associated with a `Treap` `ti` that stores all values in the range `[x(i-1) + 1, xi]`
+- each `Treap` store `O(w)` elements, so every operation of a `YFastTrie` runs in `O(log w)` expected time per operation
+- space used is `O(n + w)`, because the value `2^w - 1` is always stored in the `XFastTrie` for simplifying implementation
