@@ -67,61 +67,46 @@ export class Treap implements ISSet<number> {
     if (t2.n === 0) {
       return;
     }
-    let u = t2.r;
-    while (u.right !== null) {
-      u = u.right;
+    const dummyRoot = new Node(null);
+    dummyRoot.right = this.r;
+    if (dummyRoot.right !== null) {
+      dummyRoot.right.parent = dummyRoot;
     }
-    if (u !== t2.r) {
-      u.left = t2.r;
-      u.left.parent = u;
-    }
-    u.right = this.r;
-    u.right.parent = u;
-    u.p = Math.min(u.left ? u.left.p : 0, u.right ? u.right.p : 0) - 0.001;
-    this.r = u;
-    this.n += t2.n;
-    t2.n = 0;
-    t2.r = null;
+    dummyRoot.left = t2.r;
+    dummyRoot.left.parent = dummyRoot;
+    this.r = dummyRoot;
+    this.n += t2.n + 1;
+    this.trickleDown(dummyRoot);
+    this.splice(dummyRoot);
   }
 
   // t2 contains all elements less than or equal to x
+  // assume x is in the treap
   public split(x: number): Treap {
-    const t2 = new Treap();
-    let u = this.r;
-    let closest: Node = null;
-    while (u !== null) {
-      if (x < u.x) {
-        closest = u;
-        u = u.left;
-      } else if (x > u.x) {
-        u = u.right;
-      } else {
-        closest = u;
-        break;
-      }
-    }
-    if (closest === null) {
-      t2.n = this.n;
-      t2.r = this.r;
-      this.n = 0;
-      this.r = null;
+    const dummyNode = new Node(null);
+    dummyNode.p = -1;
+    const last = this.findLast(x);
+    let u = last.right;
+    if (u === null) {
+      last.right = dummyNode;
+      dummyNode.parent = last;
     } else {
-      closest.p = this.r.p - 0.00001;
-      this.bubbleUp(closest);
-      if (closest.x === x && closest.right !== null) {
-        this.rotateLeft(closest);
-      } else if (closest.x === x) {
-        t2.n = this.n;
-        t2.r = this.r;
-        this.n = 0;
-        this.r = null;
-      } else {
-        t2.r = closest.left;
-        const n2 = this.computeSize(t2.r);
-        t2.n = n2;
-        this.n -= n2;
+      while (u.left !== null) {
+        u = u.left;
       }
+      u.left = dummyNode;
+      dummyNode.parent = u;
     }
+    this.bubbleUp(dummyNode);
+    const t2 = new Treap();
+    t2.r = dummyNode.left;
+    t2.r.parent = null;
+    t2.n = this.computeSize(t2.r);
+    this.r = dummyNode.right;
+    if (this.r !== null) {
+      this.r.parent = null;
+    }
+    this.n -= t2.n;
     return t2;
   }
 

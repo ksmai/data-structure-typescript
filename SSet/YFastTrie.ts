@@ -1,5 +1,5 @@
-import { XFastTrie } from './XFastTrie';
-import { ISSet } from './ISSet';
+import { ISSet } from "./ISSet";
+import { XFastTrie } from "./XFastTrie";
 
 const w = 32;
 

@@ -1,14 +1,15 @@
 import { AVLTree } from "./AVLTree";
 import { BinarySearchTree } from "./BinarySearchTree";
+import { BinaryTrie } from "./BinaryTrie";
+import { BTree } from "./BTree";
 import { ISSet } from "./ISSet";
 import { RedBlackTree } from "./RedBlackTree";
 import { ScapegoatTree } from "./ScapegoatTree";
 import { SkiplistSSet } from "./SkiplistSSet";
 import { SkiplistWithFinger } from "./SkiplistWithFinger";
 import { Treap } from "./Treap";
-import { BinaryTrie } from "./BinaryTrie";
 import { XFastTrie } from "./XFastTrie";
-import { YFastTrie } from './YFastTrie';
+import { YFastTrie } from "./YFastTrie";
 
 type Testsuite<T> = (ctor: { new (): ISSet<T> }) => () => void;
 
@@ -109,6 +110,7 @@ const test6: Testsuite<number> = (ctor) => {
   BinaryTrie,
   XFastTrie,
   YFastTrie,
+  BTree,
 );
 
 describe("BinarySearchTree specifics", () => {

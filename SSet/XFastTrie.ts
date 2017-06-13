@@ -1,7 +1,7 @@
 /* tslint:disable max-classes-per-file prefer-for-of no-bitwise */
-import { ISSet } from './ISSet';
-import { IUSet } from '../USet/IUSet';
-import { Treap } from './Treap';
+import { IUSet } from "../USet/IUSet";
+import { ISSet } from "./ISSet";
+import { Treap } from "./Treap";
 
 class HashTable implements IUSet<Node> {
   protected n: number;

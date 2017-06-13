@@ -76,3 +76,23 @@ A `SSet` represents a set of sorted elements. It supports the following operatio
 - each element `xi` in the `XFastTrie` is associated with a `Treap` `ti` that stores all values in the range `[x(i-1) + 1, xi]`
 - each `Treap` store `O(w)` elements, so every operation of a `YFastTrie` runs in `O(log w)` expected time per operation
 - space used is `O(n + w)`, because the value `2^w - 1` is always stored in the `XFastTrie` for simplifying implementation
+
+### Data structure in external memory searching
+
+- when a data structure is too large to be stored in internal memory completely, some *external memory* has to be used
+- external memory has much slower access time than internal memory, and must be accessed in *blocks* of `B` words
+- in *external memory model* (as opposed to *word-RAM model*), transferring a block between internal and external memory takes *constant* time, while computations in internal memory are *free*
+
+#### B-trees
+
+- generalization of binary trees and 2-4 trees (B = 2)
+- efficient in *external memory model* (`B` is chosen so that each node fits in an external memory block)
+- all leaves have the same depth
+- any non-root internal node has at least `B` children and at most `2B` children
+- root node can have between `2` and `2B` children
+- implies that height of a `B-tree` with `l` leaves is `log l` (base `B`)
+- each internal node with `k` children stores `k - 1` sorted keys
+- every leaf node can have between `B - 1` and `2B - 1` keys
+- for any internal node `u`, `u.keys[i]` is larger than every key stored in the subtree rooted at `u.children[i]` but smaller than every key stored in the subtree rooted at `u.children[i + 1]`,
+- in external memory model, `add(x)`, `remove(x)`, `find(x)` take `O(logB(n))` time
+- in word-RAM model, `add(x)`, `remove(x)`, `find(x)` take `O(log2(n) + B)` time

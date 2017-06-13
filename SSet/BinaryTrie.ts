@@ -1,5 +1,5 @@
-/* tslint:disable max-classes-per-file */
-import { ISSet } from './ISSet';
+/* tslint:disable max-classes-per-file no-bitwise */
+import { ISSet } from "./ISSet";
 
 const prev = 0;
 const next = 1;
@@ -8,10 +8,10 @@ const right = 1;
 const w = 32;
 
 class Node {
-  x: number;
-  child: [Node, Node];
-  parent: Node;
-  jump: Node;
+  public x: number;
+  public child: [Node, Node];
+  public parent: Node;
+  public jump: Node;
 
   constructor(x: number = null) {
     this.x = x;
